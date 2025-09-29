@@ -8,9 +8,7 @@ export default function NewJob({ userID }) {
     const insertJob = async () => {
         const { data, error } = await supabase
         .from('job')
-        .insert(
-          { name: name, hourlyRate: hourlyRate, userFK: userID },
-        )
+        .insert({ name: name, hourlyRate: hourlyRate, userFK: userID })
         if (error) console.log(error)
         else console.log(data)
     };
