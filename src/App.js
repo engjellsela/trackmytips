@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { supabase } from "./supabaseClient";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import GetJobs from "./components/GetJobs";
 import ViewJob from "./components/job/ViewJob";
@@ -14,7 +12,6 @@ export default function App() {
   const { userId, userAuth, authLoaded } = useAuth();
 
   if (!authLoaded) return <p>loading...</p>
-
 
   return (
     <>

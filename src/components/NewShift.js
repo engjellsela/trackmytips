@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import Navbar from "./navbar";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 export default function NewShift() {
   const { jobId } = useParams();
@@ -11,6 +12,7 @@ export default function NewShift() {
   const [hoursWorked, setHoursWorked] = useState(0);
   const [tips, setTips] = useState(0);
   const [date, setDate] = useState('');
+  const navigate = useNavigate();
   
   useEffect(() => {
     const getJobsList = async () => {
@@ -28,17 +30,14 @@ export default function NewShift() {
   const insertShift = async () => {
     for (let i = 0; i < jobs.length; i++) {
 
-      if (jobs[i].id === jobId) {
-        console.log("job found", jobId)
-     
+      if (jobs[i].id === jobId) {     
         const { data, error } = await supabase
         .from('shift')
         .insert(
           { hoursWorked: hoursWorked, tips: tips, total: tips + (hoursWorked * jobs[i].hourlyRate), date: date, jobFK: jobId },
         )
         if (error) console.log(error)
-        else console.log(data)
- 
+        else navigate(-1);
       }
 
     }
