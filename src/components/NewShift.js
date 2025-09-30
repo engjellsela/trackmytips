@@ -2,20 +2,22 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import Navbar from "./navbar";
+import { useAuth } from "../context/AuthContext";
 
-export default function NewShift({ userID }) {
+export default function NewShift() {
   const { jobId } = useParams();
+  const { userId } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [hoursWorked, setHoursWorked] = useState(0);
   const [tips, setTips] = useState(0);
   const [date, setDate] = useState('');
-
+  
   useEffect(() => {
     const getJobsList = async () => {
       let { data, error } = await supabase
       .from('job')
       .select('id, name, hourlyRate')
-      .eq('userFK', userID)
+      .eq('userFK', userId)
       if (error) console.log(error)
       else setJobs(data);
     }

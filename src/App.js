@@ -7,29 +7,14 @@ import NewJob from "./components/NewJob";
 import NewShift from "./components/NewShift";
 import Login from "./components/auth/login";
 import SignUp from "./components/auth/signup";
-import ErrorPage from "./components/errorPage";
+import ErrorPage from "./components/ErrorPage";
+import { useAuth } from "./context/AuthContext";
 
 export default function App() {
-  const [userID, setUserID] = useState('');
-  const [userAuth, setUserAuth] = useState(false);
-  const [authLoaded, setAuthLoaded] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        setUserID(user.id);
-        setUserAuth(true);
-      }
-
-      setAuthLoaded(true);
-    }
-
-    checkAuth();
-  })
+  const { userId, userAuth, authLoaded } = useAuth();
 
   if (!authLoaded) return <p>loading...</p>
+
 
   return (
     <>
@@ -44,10 +29,10 @@ export default function App() {
           </>
         ) : (
           <>
-            <Route path="/" element={<GetJobs userID={userID} />} />
+            <Route path="/" element={<GetJobs />} />
             <Route path="/viewjob/:jobId" element={<ViewJob />} />
-            <Route path="/newjob" element={<NewJob userID={userID} />} />
-            <Route path="/newshift/:jobId" element={<NewShift userID={userID} />} />
+            <Route path="/newjob" element={<NewJob />} />
+            <Route path="/newshift/:jobId" element={<NewShift />} />
             <Route path="*" element={<ErrorPage />} />
           </>
         )}

@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom"
 import Navbar from "./navbar";
+import { useAuth } from "../context/AuthContext";
 
-export default function GetJobs({ userID }) {
+export default function GetJobs() {
+    const { userId } = useAuth();
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
@@ -11,13 +13,13 @@ export default function GetJobs({ userID }) {
             let { data, error } = await supabase
             .from('job')
             .select('id, name, hourlyRate')
-            .eq('userFK', userID)
+            .eq('userFK', userId)
             if (error) console.log(error)
             else setJobs(data);
         }
 
         getJobsList();
-    }, [userID]);
+    }, [userId]);
     
     return (
         <div>

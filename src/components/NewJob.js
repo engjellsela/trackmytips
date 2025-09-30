@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import Navbar from "./navbar";
+import { useAuth } from "../context/AuthContext";
 
-export default function NewJob({ userID }) {
+export default function NewJob() {
+    const { userId } = useAuth();
     const [name, setName] = useState('');
     const [hourlyRate, setHourlyRate] = useState(0);
 
     const insertJob = async () => {
         const { data, error } = await supabase
         .from('job')
-        .insert({ name: name, hourlyRate: hourlyRate, userFK: userID })
+        .insert({ name: name, hourlyRate: hourlyRate, userFK: userId })
         if (error) console.log(error)
         else console.log(data)
     };
