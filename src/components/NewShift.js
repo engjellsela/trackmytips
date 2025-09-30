@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+import Navbar from "./navbar";
 
 export default function NewShift({ userID }) {
+  const { jobId } = useParams();
   const [jobs, setJobs] = useState([]);
-  const [jobId, setJobId] = useState('');  
   const [hoursWorked, setHoursWorked] = useState(0);
   const [tips, setTips] = useState(0);
   const [date, setDate] = useState('');
@@ -19,12 +21,13 @@ export default function NewShift({ userID }) {
     }
     
     getJobsList();
-  });
+  }, []);
 
   const insertShift = async () => {
     for (let i = 0; i < jobs.length; i++) {
 
       if (jobs[i].id === jobId) {
+        console.log("job found", jobId)
      
         const { data, error } = await supabase
         .from('shift')
@@ -33,7 +36,7 @@ export default function NewShift({ userID }) {
         )
         if (error) console.log(error)
         else console.log(data)
-        
+ 
       }
 
     }
@@ -41,37 +44,29 @@ export default function NewShift({ userID }) {
 
   return (
     <div>
-      <h1>Add new shift</h1>
-      <div>
-        <label>Hours worked: </label>
-        <input type="number" onChange={(e) => setHoursWorked(Number(e.target.value))} />
-      </div>
+      <Navbar />
+      <div className="container p-4 my-4 border">
+        <div className="border-bottom">
+          <p className="h4">Create a new shift</p>
+        </div>
 
-      <br />
-    
-      <div>
-        <label>Tips: </label>
-        <input type="number" onChange={(e) => setTips(Number(e.target.value))} />
-      </div>
+        <div className="my-3">
+          <span class="h6">Tips</span>
+          <input type="number" onChange={(e) => setTips(Number(e.target.value))} class="form-control" placeholder="Add tips" />
+        </div>
 
-      <br />
+        <div className="my-3">
+          <span class="h6">Hours worked</span>
+          <input type="number" onChange={(e) => setHoursWorked(Number(e.target.value))} class="form-control" placeholder="Hours worked" />
+        </div>
 
-      <div>
-        <label>Date: </label>
-        <input type="text" onChange={(e) => setDate(e.target.value)} placeholder="y-m-d" />
-      </div>
-    
-      <br />
+        <div className="my-3">
+          <span class="h6">Date</span>
+          <input type="text" onChange={(e) => setDate(e.target.value)} class="form-control" placeholder="year-month-date" />
+        </div>      
 
-      <div>
-        <label>Choose job:</label>
-        <select onChange={(e) => setJobId(e.target.value)}>
-          <option disabled>Please select</option>
-          {jobs.map(job => <option key={job.id} value={job.id}>{job.name}</option>)}
-        </select>
+        <button type="button" onClick={insertShift} class="btn btn-success">Submit</button>
       </div>
-          
-      <button onClick={insertShift}>Submit</button>
-      </div>
+    </div>
     );
 };

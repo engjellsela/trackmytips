@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
+import Navbar from "./navbar";
 
 export default function NewJob({ userID }) {
     const [name, setName] = useState('');
@@ -15,22 +16,25 @@ export default function NewJob({ userID }) {
 
     return (
         <div>
-            <h2>New job</h2>
-            <div>
-                <label>Job Name</label>
-                <input type="name" onChange={(e) => setName(e.target.value)} />
+            <Navbar />
+            <div className="container p-4 my-4 border">
+                <div className="border-bottom">
+                    <h2 className="h4">New job</h2>
+                </div>
+
+                <div className="my-3">
+                    <span className="h6">Job name</span>
+                    <input type="text" className="form-control" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+                </div>
+
+
+                <div className="my-3">
+                    <span className="h6">Hourly rate</span>
+                    <input type="number" className="form-control" placeholder="Hourly rate" onChange={(e) => setHourlyRate(e.target.value)} />
+                </div>
+
+                <button type="button" class="btn btn-success" onClick={insertJob}>Submit</button>
             </div>
-
-            <br />
-
-            <div>
-                <label>Hourly rate</label>
-                <input type="number" onChange={(e) => setHourlyRate(e.target.value)} />
-            </div>
-
-            <br />
-
-            <button onClick={insertJob}>Submit</button>
         </div>
     )
 }

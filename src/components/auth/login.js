@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
 import { supabase } from "../../supabaseClient";
 
 export default function Login() {
@@ -16,24 +15,22 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-
-            <div>
-                <label>Email</label>
-                <input type="text" onChange={(e) => setEmail(e.target.value)} />
+        <div className="container p-4 my-4 border">
+            <div class="border-bottom">
+                <p class="h4">Login</p>
             </div>
 
-            <br />
-
-            <div>
-                <label>Password</label>
-                <input type="password" onChange={(e) => setPassword(e.target.value)} />
+            <div class="my-3">
+                <span class="h6">Email</span>
+                <input type="email" onChange={(e) => setEmail(e.target.value)} class="form-control" placeholder="Email"  />
             </div>
 
-            <br />
+            <div class="my-3">
+                <span class="h6">Password</span>
+                <input type="password" onChange={(e) => setPassword(e.target.value)} class="form-control" placeholder="Password" />
+            </div>
             
-            <button onClick={Login}>Login</button>
+            <button type="button" onClick={Login} className="btn btn-success">Login</button>
         </div>
     )
 }

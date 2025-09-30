@@ -10,7 +10,7 @@ import SignUp from "./components/auth/signup";
 import ErrorPage from "./components/errorPage";
 
 export default function App() {
-  const [userID] = useState('64902827-9ba4-44e7-acc9-c30cbe6bc7be');
+  const [userID, setUserID] = useState('');
   const [userAuth, setUserAuth] = useState(false);
   const [authLoaded, setAuthLoaded] = useState(false);
 
@@ -18,7 +18,11 @@ export default function App() {
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       
-      if (user) setUserAuth(true);      
+      if (user) {
+        setUserID(user.id);
+        setUserAuth(true);
+      }
+
       setAuthLoaded(true);
     }
 
@@ -41,9 +45,9 @@ export default function App() {
         ) : (
           <>
             <Route path="/" element={<GetJobs userID={userID} />} />
-            <Route path="/viewjob/:jobID" element={<ViewJob />} />
+            <Route path="/viewjob/:jobId" element={<ViewJob />} />
             <Route path="/newjob" element={<NewJob userID={userID} />} />
-            <Route path="/newshift" element={<NewShift userID={userID} />} />
+            <Route path="/newshift/:jobId" element={<NewShift userID={userID} />} />
             <Route path="*" element={<ErrorPage />} />
           </>
         )}

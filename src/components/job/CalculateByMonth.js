@@ -29,12 +29,13 @@ export default function CalculateByMonth({ shiftData }) {
         <div>
             {data.length > 0 ? data.map(dataset => {
                 return (
-                    <div key={dataset.date}>
-                        <p>date: {dataset.date}</p>
-                        <p>total: {dataset.total}</p>
-                        <p>hours worked: {dataset.hoursWorked}</p>
-                        <p>avg hour: {dataset.total / dataset.hoursWorked}</p>
-                        <br /><br />
+                    <div key={dataset.date} class="card m-4">
+                        <div class="card-header">{dataset.date}</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Total <span class="badge text-bg-secondary">{dataset.total}</span></li>
+                            <li class="list-group-item">Hours worked <span class="badge text-bg-secondary">{dataset.hoursWorked}</span></li>
+                            <li class="list-group-item">Average hour <span class="badge text-bg-secondary">{dataset.total / dataset.hoursWorked}</span></li>
+                        </ul>
                     </div>
                 )
             }) : 'no job data'}

@@ -22,24 +22,22 @@ export default function SignUp() {
     }
 
     return (
-        <div>
-            <h1>Sign up</h1>
-        
-            <div>
-                <label>Email: </label>
-                <input type="text" onChange={(e) => setEmail(e.target.value)} />
+        <div className="container p-4 my-4 border">
+            <div className="border-bottom">
+                <p className="h4">Sign Up</p>
             </div>
 
-            <br />
-
-            <div>
-                <label>Password: </label>
-                <input type="password" onChange={(e) => setPassword(e.target.value)} />
+            <div className="my-3">
+                <span className="h6">Email</span>
+                <input type="text" onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="Email" />
             </div>
 
-            <br />
+            <div className="my-3">
+                <span className="h6">Password</span>
+                <input type="password" onChange={(e) => setPassword(e.target.value)}  className="form-control" placeholder="Password" />
+            </div>
 
-            <button onClick={SignUp}>Sign up</button>
+            <button type="button" onClick={SignUp} className="btn btn-success">Sign up</button>
         </div>
     )
 }
