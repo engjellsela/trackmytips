@@ -9,7 +9,7 @@ import ErrorPage from "./components/ErrorPage";
 import { useAuth } from "./context/AuthContext";
 
 export default function App() {
-  const { userId, userAuth, authLoaded } = useAuth();
+  const { userAuth, authLoaded } = useAuth();
 
   if (!authLoaded) return <p>loading...</p>
 

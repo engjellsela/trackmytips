@@ -10,7 +10,7 @@ export default function Login() {
             email: email,
             password: password,
         })
-        if (error) console.log(error)
+        if (error) alert(error)
         else window.location.replace('/');
     }
 
@@ -31,6 +31,7 @@ export default function Login() {
             </div>
             
             <button type="button" onClick={Login} className="btn btn-success">Login</button>
+            <p className="mt-4">No account? <a href="/signup" className="link-primary">Create an account</a></p>
         </div>
     )
 }

@@ -13,7 +13,7 @@ export default function NewJob() {
         .from('job')
         .insert({ name: name, hourlyRate: hourlyRate, userFK: userId })
         if (error) console.log(error)
-        else console.log(data)
+        else window.location.href="/";
     };
 
     return (

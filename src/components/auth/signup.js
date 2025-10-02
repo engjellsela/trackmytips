@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
+import { Link } from "react-router";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ export default function SignUp() {
             email: email,
             password: password,
         })
-        if (error) console.log(error)
+        if (error) alert(error)
         else {
             
             const { error } = await supabase
@@ -39,6 +40,7 @@ export default function SignUp() {
             </div>
 
             <button type="button" onClick={SignUp} className="btn btn-success">Sign up</button>
+            <p className="mt-4">Already have an account? <a href="/login" className="link-primary">Login</a></p>
         </div>
     )
 }
