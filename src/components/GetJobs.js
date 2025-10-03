@@ -26,7 +26,7 @@ export default function GetJobs() {
             <Navbar />
             <div className="container p-4 my-4 border">
                 <p>Your Jobs</p>
-                <div class="row my-4">
+                <div className="row my-4">
                     <div class="col-4"></div>
                     <div class="col-4"></div>
                     <div class="col-4"><Link to="/newjob" class="btn btn-success float-end">+ New Job</Link></div>
@@ -36,7 +36,7 @@ export default function GetJobs() {
                 {jobs.length > 0 ?
                     jobs.map((job) => (
                         <Link className="btn btn-success mx-1" to={`/viewjob/${job.id}`}>{job.name}</Link>
-                    )) : <p>add a job</p>
+                    )) : ''
                 }
                 </div>
             </div>

@@ -29,6 +29,7 @@ export default function ViewJob() {
                         .eq('jobFK', jobID)
                         if (error) console.log(error)
                         else {
+                            console.log(data)
                             setShiftData(data);
                             setShiftDataLoaded(true);
                         }
