@@ -27,15 +27,15 @@ export default function GetJobs() {
             <div className="container p-4 my-4 border">
                 <p>Your Jobs</p>
                 <div className="row my-4">
-                    <div class="col-4"></div>
-                    <div class="col-4"></div>
-                    <div class="col-4"><Link to="/newjob" class="btn btn-success float-end">+ New Job</Link></div>
+                    <div className="col-4"></div>
+                    <div className="col-4"></div>
+                    <div className="col-4"><Link to="/newjob" className="btn btn-success float-end">+ New Job</Link></div>
                 </div>
 
                 <div>
                 {jobs.length > 0 ?
                     jobs.map((job) => (
-                        <Link className="btn btn-success mx-1" to={`/viewjob/${job.id}`}>{job.name}</Link>
+                        <Link className="btn btn-success mx-1" to={`/viewjob/${job.id}`} key={job.id}>{job.name}</Link>
                     )) : ''
                 }
                 </div>

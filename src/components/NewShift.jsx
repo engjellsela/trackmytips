@@ -52,21 +52,21 @@ export default function NewShift() {
         </div>
 
         <div className="my-3">
-          <span class="h6">Tips</span>
-          <input type="number" onChange={(e) => setTips(Number(e.target.value))} class="form-control" placeholder="Add tips" />
+          <span className="h6">Tips</span>
+          <input type="number" onChange={(e) => setTips(Number(e.target.value))} className="form-control" placeholder="Add tips" />
         </div>
 
         <div className="my-3">
-          <span class="h6">Hours worked</span>
-          <input type="number" onChange={(e) => setHoursWorked(Number(e.target.value))} class="form-control" placeholder="Hours worked" />
+          <span className="h6">Hours worked</span>
+          <input type="number" onChange={(e) => setHoursWorked(Number(e.target.value))} className="form-control" placeholder="Hours worked" />
         </div>
 
         <div className="my-3">
-          <span class="h6">Date</span>
-          <input type="text" onChange={(e) => setDate(e.target.value)} class="form-control" placeholder="year-month-date" />
+          <span className="h6">Date</span>
+          <input type="text" onChange={(e) => setDate(e.target.value)} className="form-control" placeholder="year-month-date" />
         </div>      
 
-        <button type="button" onClick={insertShift} class="btn btn-success">Submit</button>
+        <button type="button" onClick={insertShift} className="btn btn-success">Submit</button>
       </div>
     </div>
     );

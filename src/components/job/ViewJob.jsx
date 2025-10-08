@@ -49,10 +49,10 @@ export default function ViewJob() {
         <div>
             <Navbar />
             <div className="container p-4 my-4 border">
-                <div class="border-bottom">
-                    <div class="row">
-                        <div class="col-6"><p class="h4">{jobName}</p></div>
-                        <div class="col-6"><Link to={`/newshift/${jobId}`} class="btn btn-success btn-sm float-end">+ New shift</Link></div>
+                <div className="border-bottom">
+                    <div className="row">
+                        <div className="col-6"><p className="h4">{jobName}</p></div>
+                        <div className="col-6"><Link to={`/newshift/${jobId}`} className="btn btn-success btn-sm float-end">+ New shift</Link></div>
                     </div>
                 </div>
 

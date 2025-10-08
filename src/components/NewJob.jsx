@@ -35,7 +35,7 @@ export default function NewJob() {
                     <input type="number" className="form-control" placeholder="Hourly rate" onChange={(e) => setHourlyRate(e.target.value)} />
                 </div>
 
-                <button type="button" class="btn btn-success" onClick={insertJob}>Submit</button>
+                <button type="button" className="btn btn-success" onClick={insertJob}>Submit</button>
             </div>
         </div>
     )
