@@ -25,7 +25,7 @@ export default function Login() {
     }
 
     return (
-        <div className="container mx-auto p-8 my-4 border">
+        <div className="container mx-auto p-8 my-4 border max-w-lg">
             <FieldSet>
                 <FieldLegend>Login</FieldLegend>
                 <FieldGroup>

@@ -35,7 +35,7 @@ export default function GetJobs() {
                     {jobs.length > 0 ?
                         jobs.map((job) => (
                             <div className="mx-2">
-                                <Link to={`/viewjob/${job.id}`} key={job.id}><Button>{job.name}</Button></Link>
+                                <Link to={`/job/${job.id}`} key={job.id}><Button>{job.name}</Button></Link>
                             </div>
                         )) : ''
                     }

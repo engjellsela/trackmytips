@@ -27,7 +27,7 @@ export default function App() {
         ) : (
           <>
             <Route path="/" element={<GetJobs />} />
-            <Route path="/viewjob/:jobId" element={<ViewJob />} />
+            <Route path="/job/:jobId" element={<ViewJob />} />
             <Route path="/newjob" element={<NewJob />} />
             <Route path="/newshift/:jobId" element={<NewShift />} />
             <Route path="*" element={<ErrorPage />} />
