@@ -1,113 +1,73 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { supabase } from "../supabaseClient";
-import Navbar from "./navbar";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import {
   Field,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
   FieldSet
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 
-export default function NewShift() {
-  const { jobId } = useParams();
-  const { userId } = useAuth();
-  const [jobs, setJobs] = useState([]);
+export default function NewShift({ jobId, jobHourlyRate }) {
   const [hoursWorked, setHoursWorked] = useState(0);
   const [tips, setTips] = useState(0);
   const [date, setDate] = useState('');
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    const getJobsList = async () => {
-      let { data, error } = await supabase
-      .from('job')
-      .select('id, name, hourlyRate')
-      .eq('userFK', userId)
-      if (error) console.log(error)
-      else setJobs(data);
-    }
-    
-    getJobsList();
-  }, []);
 
   const insertShift = async () => {
-    for (let i = 0; i < jobs.length; i++) {
-
-      if (jobs[i].id === jobId) {     
-        const { data, error } = await supabase
-        .from('shift')
-        .insert(
-          { hoursWorked: hoursWorked, tips: tips, total: tips + (hoursWorked * jobs[i].hourlyRate), date: date, jobFK: jobId },
-        )
-        if (error) console.log(error)
-        else navigate(-1);
-      }
-
-    }
+    const { data, error } = await supabase
+    .from('shift')
+    .insert(
+      { hoursWorked: hoursWorked, tips: tips, total: parseInt(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: date, jobFK: jobId },
+    )
+    if (error) console.log(error)
+    else window.location.reload();    ;
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="container mx-auto p-8 my-4 border">
+    <Dialog>
+      <DialogTrigger><Button>+ New shift</Button></DialogTrigger>
+      <DialogContent>
+          <DialogHeader>
+              <DialogTitle>Create new shift</DialogTitle>
+          </DialogHeader>
+          <FieldSet>
+          <FieldGroup>
+                  <Field>
+                  <FieldLabel>Tips</FieldLabel>
+                  <Input type="number" onChange={(e) => setTips(e.target.value)}  autoComplete="off" placeholder="Tips" />
+              </Field>
+                  <Field>
+                  <FieldLabel>Hours worked</FieldLabel>
+                  <Input type="number" onChange={(e) => setHoursWorked(e.target.value)}  autoComplete="off" placeholder="Hours worked" />
+                  </Field>
+                  <Field>
+                  <Field>
+                  <FieldLabel>Date</FieldLabel>
+                  <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
+                  </Field>
+                  </Field>
+              </FieldGroup>
+              <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" onClick={insertShift}>Submit</Button>
+              </DialogFooter>
+          </FieldSet>
 
-            <FieldSet>
-                    <FieldLegend>Create new shift</FieldLegend>
-                    <FieldGroup>
-                        <Field>
-                          <FieldLabel>Tips</FieldLabel>
-                          <Input type="number" onChange={(e) => setTips(e.target.value)}  autoComplete="off" placeholder="Tips" />
-                       </Field>
-                        <Field>
-                          <FieldLabel>Hours worked</FieldLabel>
-                          <Input type="number" onChange={(e) => setHoursWorked(e.target.value)}  autoComplete="off" placeholder="Hours worked" />
-                        </Field>
-                        <Field>
-                        <Field>
-                          <FieldLabel>Date</FieldLabel>
-                          <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
-                        </Field>
-                        </Field>
-                        <Field orientation="horizontal">
-                            <Button type="submit" onClick={insertShift}>Submit</Button>
-                        </Field>
-                    </FieldGroup>
-                </FieldSet>
-
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
     );
 };
-
-/*
-
-      <div className="container p-4 my-4 border">
-        <div className="border-bottom">
-          <p className="h4">Create a new shift</p>
-        </div>
-
-        <div className="my-3">
-          <span className="h6">Tips</span>
-          <input type="number" onChange={(e) => setTips(Number(e.target.value))} className="form-control" placeholder="Add tips" />
-        </div>
-
-        <div className="my-3">
-          <span className="h6">Hours worked</span>
-          <input type="number" onChange={(e) => setHoursWorked(Number(e.target.value))} className="form-control" placeholder="Hours worked" />
-        </div>
-
-        <div className="my-3">
-          <span className="h6">Date</span>
-          <input type="text" onChange={(e) => setDate(e.target.value)} className="form-control" placeholder="year-month-date" />
-        </div>      
-
-        <button type="button" onClick={insertShift} className="btn btn-success">Submit</button>
-      </div>
-
-      */
