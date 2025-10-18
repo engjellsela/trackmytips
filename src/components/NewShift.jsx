@@ -4,6 +4,15 @@ import { supabase } from "../supabaseClient";
 import Navbar from "./navbar";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function NewShift() {
   const { jobId } = useParams();
@@ -46,6 +55,38 @@ export default function NewShift() {
   return (
     <div>
       <Navbar />
+      <div className="container mx-auto p-8 my-4 border">
+
+            <FieldSet>
+                    <FieldLegend>Create new shift</FieldLegend>
+                    <FieldGroup>
+                        <Field>
+                          <FieldLabel>Tips</FieldLabel>
+                          <Input type="number" onChange={(e) => setTips(e.target.value)}  autoComplete="off" placeholder="Tips" />
+                       </Field>
+                        <Field>
+                          <FieldLabel>Hours worked</FieldLabel>
+                          <Input type="number" onChange={(e) => setHoursWorked(e.target.value)}  autoComplete="off" placeholder="Hours worked" />
+                        </Field>
+                        <Field>
+                        <Field>
+                          <FieldLabel>Date</FieldLabel>
+                          <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
+                        </Field>
+                        </Field>
+                        <Field orientation="horizontal">
+                            <Button type="submit" onClick={insertShift}>Submit</Button>
+                        </Field>
+                    </FieldGroup>
+                </FieldSet>
+
+      </div>
+    </div>
+    );
+};
+
+/*
+
       <div className="container p-4 my-4 border">
         <div className="border-bottom">
           <p className="h4">Create a new shift</p>
@@ -68,6 +109,5 @@ export default function NewShift() {
 
         <button type="button" onClick={insertShift} className="btn btn-success">Submit</button>
       </div>
-    </div>
-    );
-};
+
+      */

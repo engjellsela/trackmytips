@@ -1,4 +1,11 @@
 import { useState, useEffect } from "react";
+import {
+    Item,
+    ItemContent,
+    ItemDescription,
+    ItemTitle,
+  } from "@/components/ui/item";
+  import { Badge } from "@/components/ui/badge";
 
 export default function CalculateByMonth({ shiftData }) {
     const [data, setData] = useState([]);
@@ -26,17 +33,23 @@ export default function CalculateByMonth({ shiftData }) {
     }, [shiftData])
 
     return (
-        <div>
+        <div className="flex flex-col">
             {data.length > 0 ? data.map(dataset => {
                 return (
-                    <div key={dataset.date} className="card m-4">
-                        <div className="card-header">{dataset.date}</div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Total <span className="badge text-bg-secondary">{dataset.total}</span></li>
-                            <li className="list-group-item">Hours worked <span className="badge text-bg-secondary">{dataset.hoursWorked}</span></li>
-                            <li className="list-group-item">Average hour <span className="badge text-bg-secondary">{dataset.total / dataset.hoursWorked}</span></li>
-                        </ul>
-                    </div>
+                    <Item variant="outline" className="m-2">
+                        <ItemContent>
+                        <ItemTitle>{dataset.date}</ItemTitle>
+                        <ItemDescription>
+                             Total <Badge>{dataset.total}</Badge>
+                         </ItemDescription>
+                         <ItemDescription>
+                             Hours worked  <Badge>{dataset.hoursWorked}</Badge>
+                        </ItemDescription>
+                        <ItemDescription>
+                            Average hour <Badge>{dataset.total / dataset.hoursWorked}</Badge>
+                        </ItemDescription>
+                        </ItemContent>
+                    </Item>
                 )
             }) : 'no job data'}
         </div>

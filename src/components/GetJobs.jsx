@@ -3,6 +3,7 @@ import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom"
 import Navbar from "./navbar";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "@/components/ui/button"
 
 export default function GetJobs() {
     const { userId } = useAuth();
@@ -24,20 +25,20 @@ export default function GetJobs() {
     return (
         <div>
             <Navbar />
-            <div className="container p-4 my-4 border">
-                <p>Your Jobs</p>
-                <div className="row my-4">
-                    <div className="col-4"></div>
-                    <div className="col-4"></div>
-                    <div className="col-4"><Link to="/newjob" className="btn btn-success float-end">+ New Job</Link></div>
+            <div className="container mx-auto p-8 my-4 border">
+                <div className="flex justify-between mb-4">
+                    <div><p>Your Jobs</p></div>
+                    <div><Link to="/newjob"><Button variant="link">+ New Job</Button></Link></div>
                 </div>
 
-                <div>
-                {jobs.length > 0 ?
-                    jobs.map((job) => (
-                        <Link className="btn btn-success mx-1" to={`/viewjob/${job.id}`} key={job.id}>{job.name}</Link>
-                    )) : ''
-                }
+                <div className="flex flex-row">
+                    {jobs.length > 0 ?
+                        jobs.map((job) => (
+                            <div className="mx-2">
+                                <Link to={`/viewjob/${job.id}`} key={job.id}><Button>{job.name}</Button></Link>
+                            </div>
+                        )) : ''
+                    }
                 </div>
             </div>
         </div>

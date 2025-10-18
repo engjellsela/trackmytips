@@ -2,6 +2,15 @@ import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import Navbar from "./navbar";
 import { useAuth } from "../context/AuthContext";
+import {
+    Field,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSet
+  } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function NewJob() {
     const { userId } = useAuth();
@@ -19,23 +28,23 @@ export default function NewJob() {
     return (
         <div>
             <Navbar />
-            <div className="container p-4 my-4 border">
-                <div className="border-bottom">
-                    <h2 className="h4">New job</h2>
-                </div>
-
-                <div className="my-3">
-                    <span className="h6">Job name</span>
-                    <input type="text" className="form-control" placeholder="Name" onChange={(e) => setName(e.target.value)} />
-                </div>
-
-
-                <div className="my-3">
-                    <span className="h6">Hourly rate</span>
-                    <input type="number" className="form-control" placeholder="Hourly rate" onChange={(e) => setHourlyRate(e.target.value)} />
-                </div>
-
-                <button type="button" className="btn btn-success" onClick={insertJob}>Submit</button>
+            <div className="container mx-auto p-8 my-4 border">
+                <FieldSet>
+                    <FieldLegend>New Job</FieldLegend>
+                    <FieldGroup>
+                        <Field>
+                            <FieldLabel htmlFor="name">Job name</FieldLabel>
+                            <Input onChange={(e) => setName(e.target.value)}  autoComplete="off" placeholder="Name" />
+                       </Field>
+                        <Field>
+                            <FieldLabel htmlFor="username">Hourly rate</FieldLabel>
+                            <Input type="number" onChange={(e) => setHourlyRate(e.target.value)}  autoComplete="off" placeholder="Name" />
+                        </Field>
+                        <Field orientation="horizontal">
+                            <Button type="submit" onClick={insertJob}>Submit</Button>
+                        </Field>
+                    </FieldGroup>
+                </FieldSet>
             </div>
         </div>
     )

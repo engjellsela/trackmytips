@@ -1,5 +1,15 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
+import { Link } from "react-router-dom";
+import {
+    Field,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSet
+  } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -23,23 +33,26 @@ export default function SignUp() {
     }
 
     return (
-        <div className="container p-4 my-4 border">
-            <div className="border-bottom">
-                <p className="h4">Sign Up</p>
-            </div>
-
-            <div className="my-3">
-                <span className="h6">Email</span>
-                <input type="text" onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="Email" />
-            </div>
-
-            <div className="my-3">
-                <span className="h6">Password</span>
-                <input type="password" onChange={(e) => setPassword(e.target.value)}  className="form-control" placeholder="Password" />
-            </div>
-
-            <button type="button" onClick={SignUp} className="btn btn-success">Sign up</button>
-            <p className="mt-4">Already have an account? <a href="/login" className="link-primary">Login</a></p>
+        <div className="container mx-auto p-8 my-4 border">
+            <FieldSet>
+                <FieldLegend>Sign up</FieldLegend>
+                    <FieldGroup>
+                        <Field>
+                          <FieldLabel>Email</FieldLabel>
+                          <Input type="email" onChange={(e) => setEmail(e.target.value)}  autoComplete="off" placeholder="Email" />
+                       </Field>
+                        <Field>
+                          <FieldLabel>Password</FieldLabel>
+                          <Input type="password" onChange={(e) => setPassword(e.target.value)}  autoComplete="off" placeholder="Password" />
+                        </Field>
+                        <Field orientation="horizontal">
+                            <Button type="submit" onClick={SignUp}>Login</Button>
+                        </Field>
+                        <Field>
+                            <FieldLabel>Already have an account?<Link to={"/login"}><Button variant="link">Login</Button></Link></FieldLabel>
+                        </Field>
+                    </FieldGroup>
+            </FieldSet>
         </div>
     )
 }

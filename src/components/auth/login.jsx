@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient";
-
+import { Link } from "react-router-dom";
+import {
+    Field,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSet
+  } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+  
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,23 +25,26 @@ export default function Login() {
     }
 
     return (
-        <div className="container p-4 my-4 border">
-            <div className="border-bottom">
-                <p className="h4">Login</p>
-            </div>
-
-            <div className="my-3">
-                <span className="h6">Email</span>
-                <input type="email" onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="Email"  />
-            </div>
-
-            <div className="my-3">
-                <span className="h6">Password</span>
-                <input type="password" onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder="Password" />
-            </div>
-            
-            <button type="button" onClick={Login} className="btn btn-success">Login</button>
-            <p className="mt-4">No account? <a href="/signup" className="link-primary">Create an account</a></p>
+        <div className="container mx-auto p-8 my-4 border">
+            <FieldSet>
+                <FieldLegend>Login</FieldLegend>
+                <FieldGroup>
+                    <Field>
+                      <FieldLabel>Email</FieldLabel>
+                      <Input type="email" onChange={(e) => setEmail(e.target.value)}  autoComplete="off" placeholder="Email" />
+                   </Field>
+                    <Field>
+                      <FieldLabel>Password</FieldLabel>
+                        <Input type="password" onChange={(e) => setPassword(e.target.value)}  autoComplete="off" placeholder="Password" />
+                    </Field>
+                    <Field orientation="horizontal">
+                        <Button type="submit" onClick={Login}>Login</Button>
+                    </Field>
+                    <Field>
+                        <FieldLabel>No account?<Link to={"/signup"}><Button variant="link">Create an account</Button></Link></FieldLabel>
+                    </Field>
+                </FieldGroup>
+            </FieldSet>
         </div>
     )
 }

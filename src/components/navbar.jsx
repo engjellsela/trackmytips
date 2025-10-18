@@ -1,4 +1,5 @@
 import { supabase } from "../supabaseClient"
+import { Button } from "@/components/ui/button"
 
 export default function Navbar() {
     const logout = async () => {
@@ -12,12 +13,12 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="container pt-4">
-            <div className="row p-0">
-                <div className="col-6"><button type="button" onClick={dashboardRedirect} className="btn btn-secondary btn-sm">Dashboard</button></div>
-                <div className="col-6">
-                    <button type="button" onClick={logout} className="btn btn-danger btn-sm float-end">Logout</button>
-                </div>
+        <nav className="container mx-auto py-4">
+
+            <div className="flex justify-between">
+                <div><Button size="sm" variant="outline" onClick={dashboardRedirect}>Dashboard</Button></div>
+
+                <div><Button size="sm" variant="outline" onClick={logout}>Logout</Button></div>
             </div>
         </nav>
     )   

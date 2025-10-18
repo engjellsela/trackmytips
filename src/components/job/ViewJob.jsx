@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import CalculateByMonth from "./CalculateByMonth";
 import Navbar from "../navbar";
+import { Button } from "@/components/ui/button"
 
 export default function ViewJob() {
     const { jobId } = useParams();
@@ -48,12 +49,10 @@ export default function ViewJob() {
     return (
         <div>
             <Navbar />
-            <div className="container p-4 my-4 border">
-                <div className="border-bottom">
-                    <div className="row">
-                        <div className="col-6"><p className="h4">{jobName}</p></div>
-                        <div className="col-6"><Link to={`/newshift/${jobId}`} className="btn btn-success btn-sm float-end">+ New shift</Link></div>
-                    </div>
+            <div className="container mx-auto p-8 my-4 border">
+                <div className="flex justify-between mb-4">
+                    <div><p>{jobName}</p></div>
+                    <div><Link to={`/newshift/${jobId}`}><Button variant="link">+ New shift</Button></Link></div>
                 </div>
 
                 {shiftDataLoaded === true ? <CalculateByMonth shiftData={shiftData} /> : 'no shifts found'}
