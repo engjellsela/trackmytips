@@ -5,7 +5,7 @@ import {
     ItemDescription,
     ItemTitle,
   } from "@/components/ui/item";
-  import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 
 export default function CalculateByMonth({ shiftData }) {
     const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ export default function CalculateByMonth({ shiftData }) {
                     return acc;
                 }, {})
             );            
-
+            
             setData(groupByMonth);
         };
 
@@ -40,18 +40,18 @@ export default function CalculateByMonth({ shiftData }) {
                         <ItemContent>
                         <ItemTitle>{dataset.date}</ItemTitle>
                         <ItemDescription>
-                             Total <Badge>{dataset.total}</Badge>
+                             Total <Badge>{(dataset.total).toFixed(2)}</Badge>
                          </ItemDescription>
                          <ItemDescription>
-                             Hours worked  <Badge>{dataset.hoursWorked}</Badge>
+                             Hours worked  <Badge>{(dataset.hoursWorked).toFixed(2)}</Badge>
                         </ItemDescription>
                         <ItemDescription>
-                            Average hour <Badge>{dataset.total / dataset.hoursWorked}</Badge>
+                            Average hour <Badge>{(dataset.total / dataset.hoursWorked).toFixed(2)}</Badge>
                         </ItemDescription>
                         </ItemContent>
                     </Item>
                 )
-            }) : 'no job data'}
+            }) : 'there are not any shifts to this job'}
         </div>
     )
 };

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import GetJobs from "./components/GetJobs";
 import ViewJob from "./components/job/ViewJob";
 import NewJob from "./components/NewJob";
-import NewShift from "./components/NewShift";
 import Login from "./components/auth/login";
 import SignUp from "./components/auth/signup";
 import ErrorPage from "./components/ErrorPage";
@@ -29,7 +28,6 @@ export default function App() {
             <Route path="/" element={<GetJobs />} />
             <Route path="/job/:jobId" element={<ViewJob />} />
             <Route path="/newjob" element={<NewJob />} />
-            <Route path="/newshift/:jobId" element={<NewShift />} />
             <Route path="*" element={<ErrorPage />} />
           </>
         )}

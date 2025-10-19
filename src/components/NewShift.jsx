@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
-import { useNavigate } from 'react-router-dom';
 import {
   Field,
   FieldGroup,
@@ -23,7 +22,6 @@ export default function NewShift({ jobId, jobHourlyRate }) {
   const [hoursWorked, setHoursWorked] = useState(0);
   const [tips, setTips] = useState(0);
   const [date, setDate] = useState('');
-  const navigate = useNavigate();
 
   const insertShift = async () => {
     const { data, error } = await supabase
@@ -32,7 +30,7 @@ export default function NewShift({ jobId, jobHourlyRate }) {
       { hoursWorked: hoursWorked, tips: tips, total: parseInt(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: date, jobFK: jobId },
     )
     if (error) console.log(error)
-    else window.location.reload();    ;
+    else window.location.reload();
   };
 
   return (
@@ -43,30 +41,27 @@ export default function NewShift({ jobId, jobHourlyRate }) {
               <DialogTitle>Create new shift</DialogTitle>
           </DialogHeader>
           <FieldSet>
-          <FieldGroup>
-                  <Field>
-                  <FieldLabel>Tips</FieldLabel>
-                  <Input type="number" onChange={(e) => setTips(e.target.value)}  autoComplete="off" placeholder="Tips" />
+            <FieldGroup>
+              <Field>
+                <FieldLabel>Tips</FieldLabel>
+                <Input type="number" onChange={(e) => setTips(e.target.value)}  autoComplete="off" placeholder="Tips" />
               </Field>
-                  <Field>
-                  <FieldLabel>Hours worked</FieldLabel>
-                  <Input type="number" onChange={(e) => setHoursWorked(e.target.value)}  autoComplete="off" placeholder="Hours worked" />
-                  </Field>
-                  <Field>
-                  <Field>
-                  <FieldLabel>Date</FieldLabel>
-                  <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
-                  </Field>
-                  </Field>
-              </FieldGroup>
-              <DialogFooter>
+              <Field>
+                <FieldLabel>Hours worked</FieldLabel>
+                <Input type="number" onChange={(e) => setHoursWorked(e.target.value)}  autoComplete="off" placeholder="Hours worked" />
+              </Field>
+              <Field>
+                <FieldLabel>Date</FieldLabel>
+                <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
+              </Field>
+            </FieldGroup>
+            <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
               <Button type="submit" onClick={insertShift}>Submit</Button>
-              </DialogFooter>
+            </DialogFooter>
           </FieldSet>
-
       </DialogContent>
     </Dialog>
     );
