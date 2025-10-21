@@ -1,4 +1,4 @@
-A simple web-app to track your tips.
+A simple web-app for restaurant workers to track their tips.
 
 Live version: https://trackmytips.netlify.app/login
 
