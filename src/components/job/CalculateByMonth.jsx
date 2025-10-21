@@ -36,18 +36,18 @@ export default function CalculateByMonth({ shiftData }) {
         <div className="flex flex-col">
             {data.length > 0 ? data.map(dataset => {
                 return (
-                    <Item variant="outline" className="m-2">
+                    <Item variant="outline" key={dataset.date} className="m-2">
                         <ItemContent>
-                        <ItemTitle>{dataset.date}</ItemTitle>
-                        <ItemDescription>
-                             Total <Badge>{(dataset.total).toFixed(2)}</Badge>
-                         </ItemDescription>
-                         <ItemDescription>
-                             Hours worked  <Badge>{(dataset.hoursWorked).toFixed(2)}</Badge>
-                        </ItemDescription>
-                        <ItemDescription>
-                            Average hour <Badge>{(dataset.total / dataset.hoursWorked).toFixed(2)}</Badge>
-                        </ItemDescription>
+                            <ItemTitle>{dataset.date}</ItemTitle>
+                            <ItemDescription>
+                                Total <Badge>{(dataset.total).toFixed(2)}</Badge>
+                            </ItemDescription>
+                            <ItemDescription>
+                                Hours worked  <Badge>{(dataset.hoursWorked).toFixed(2)}</Badge>
+                            </ItemDescription>
+                            <ItemDescription>
+                                Average hour <Badge>{(dataset.total / dataset.hoursWorked).toFixed(2)}</Badge>
+                            </ItemDescription>
                         </ItemContent>
                     </Item>
                 )

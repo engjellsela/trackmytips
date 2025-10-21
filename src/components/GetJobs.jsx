@@ -28,14 +28,14 @@ export default function GetJobs() {
             <div className="container mx-auto p-8 my-4 border">
                 <div className="flex justify-between mb-4">
                     <div><p>Your Jobs</p></div>
-                    <div><Link to="/newjob"><Button variant="link">+ New Job</Button></Link></div>
+                    <div><Link to="/newjob"><Button>+ New Job</Button></Link></div>
                 </div>
 
-                <div className="flex flex-row">
+                <div className="flex flex-col sm:flex-row">
                     {jobs.length > 0 ?
                         jobs.map((job) => (
-                            <div className="mx-2">
-                                <Link to={`/job/${job.id}`} key={job.id}><Button>{job.name}</Button></Link>
+                            <div key={job.id} className="mx-0 my-1 sm:mx-2 sm:my-0">
+                                <Link to={`/job/${job.id}`}><Button className="bg-gray-600 hover:bg-gray-500">{job.name}</Button></Link>
                             </div>
                         )) : ''
                     }

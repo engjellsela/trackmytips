@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDownIcon } from "lucide-react"
 import { supabase } from "../supabaseClient";
 import {
   Field,
@@ -17,17 +18,30 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function NewShift({ jobId, jobHourlyRate }) {
   const [hoursWorked, setHoursWorked] = useState(0);
   const [tips, setTips] = useState(0);
   const [date, setDate] = useState('');
+  const [open, setOpen] = useState(false);
 
   const insertShift = async () => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+
     const { data, error } = await supabase
     .from('shift')
     .insert(
-      { hoursWorked: hoursWorked, tips: tips, total: parseInt(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: date, jobFK: jobId },
+      { hoursWorked: hoursWorked, tips: tips, total: parseInt(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: formattedDate, jobFK: jobId },
     )
     if (error) console.log(error)
     else window.location.reload();
@@ -35,7 +49,7 @@ export default function NewShift({ jobId, jobHourlyRate }) {
 
   return (
     <Dialog>
-      <DialogTrigger><Button>+ New shift</Button></DialogTrigger>
+      <DialogTrigger asChild><Button>+ New shift</Button></DialogTrigger>
       <DialogContent>
           <DialogHeader>
               <DialogTitle>Create new shift</DialogTitle>
@@ -52,7 +66,28 @@ export default function NewShift({ jobId, jobHourlyRate }) {
               </Field>
               <Field>
                 <FieldLabel>Date</FieldLabel>
-                <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      id="date"
+                      className="w-48 justify-between font-normal">
+                      {date ? date.toLocaleDateString() : "Select date"}
+                      <ChevronDownIcon />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      captionLayout="dropdown"
+                      onSelect={(date) => {
+                        setDate(date)
+                        setOpen(false)
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
               </Field>
             </FieldGroup>
             <DialogFooter>
@@ -66,3 +101,12 @@ export default function NewShift({ jobId, jobHourlyRate }) {
     </Dialog>
     );
 };
+
+/*
+
+              <Field>
+                <FieldLabel>Date</FieldLabel>
+                <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
+              </Field>
+
+              */
