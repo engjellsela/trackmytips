@@ -10,6 +10,7 @@ import {
   } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { da } from "date-fns/locale/da";
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
@@ -27,9 +28,16 @@ export default function SignUp() {
             .from('userAccounts')
             .insert({ userID: data.user.id, email: data.user.email })
             if (error) console.log(error)
-            else window.location.replace('/');
             
         }
+    }
+
+    const test = async () => {
+        const { data, error } = await supabase
+        .from('job')
+        .insert({ id: '262fe25b-2e08-438e-b247-79986ca584b1', name: 'test', hourlyRate: 10, userFK: '262fe25b-2e08-438e-b247-79986ca584b1' })
+        if (error) console.log(error)
+        else console.log(data)
     }
 
     return (
@@ -47,6 +55,7 @@ export default function SignUp() {
                         </Field>
                         <Field orientation="horizontal">
                             <Button type="submit" onClick={SignUp}>Login</Button>
+                            <Button type="submit" onClick={test}>Test acc</Button>
                         </Field>
                         <Field>
                             <FieldLabel>Already have an account?<Link to={"/login"}><Button variant="link">Login</Button></Link></FieldLabel>

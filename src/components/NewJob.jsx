@@ -28,9 +28,9 @@ export default function NewJob() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto p-8 my-4 border">
+            <div className="container mx-auto p-8 my-5 border">
                 <FieldSet>
-                    <FieldLegend>New Job</FieldLegend>
+                    <FieldLegend>Add a New Job</FieldLegend>
                     <FieldGroup>
                         <Field>
                             <FieldLabel htmlFor="name">Job name</FieldLabel>

@@ -30,7 +30,7 @@ export default function ViewJob() {
                         .from('shift')
                         .select('total, hoursWorked, date')
                         .eq('jobFK', jobID)
-                        if (error) console.log(error)
+                        if (error) console.log('error', error)
                         else {
                             setShiftData(data);
                             setShiftDataLoaded(true);
@@ -50,13 +50,13 @@ export default function ViewJob() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto p-8 my-4 border">
-                <div className="flex justify-between mb-4">
+            <div className="container mx-auto my-10 px-2 md:p-0">
+                <div className="flex justify-between mb-5">
                     <div><p>{jobName}</p></div>
                     <div><NewShift jobId={jobId} jobHourlyRate={jobHourlyRate} /></div>
                 </div>
 
-                {shiftDataLoaded === true ? <CalculateByMonth shiftData={shiftData} /> : 'no shifts found'}
+                {shiftDataLoaded === true ? <CalculateByMonth jobId={jobId} shiftData={shiftData} /> : 'no shifts found'}
             </div>
         </div>
     )

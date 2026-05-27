@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import GetJobs from "./components/GetJobs";
 import ViewJob from "./components/job/ViewJob";
+import ViewJobShiftsByMonth from './components/job/ViewJobShiftsByMonth';
 import NewJob from "./components/NewJob";
 import Login from "./components/auth/login";
 import SignUp from "./components/auth/signup";
@@ -26,7 +27,8 @@ export default function App() {
         ) : (
           <>
             <Route path="/" element={<GetJobs />} />
-            <Route path="/job/:jobId" element={<ViewJob />} />
+            <Route path="/jobs/:jobId" element={<ViewJob />} />
+            <Route path="/jobs/:jobId/shifts" element={<ViewJobShiftsByMonth />} />
             <Route path="/newjob" element={<NewJob />} />
             <Route path="*" element={<ErrorPage />} />
           </>
@@ -35,4 +37,4 @@ export default function App() {
     </Router>
     </>
   );
-}
+};

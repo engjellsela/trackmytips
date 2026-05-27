@@ -6,8 +6,9 @@ import {
     ItemTitle,
   } from "@/components/ui/item";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom"
 
-export default function CalculateByMonth({ shiftData }) {
+export default function CalculateByMonth({ jobId, shiftData }) {
     const [data, setData] = useState([]);
     
     useEffect(() => {
@@ -36,20 +37,29 @@ export default function CalculateByMonth({ shiftData }) {
         <div className="flex flex-col">
             {data.length > 0 ? data.map(dataset => {
                 return (
-                    <Item variant="outline" key={dataset.date} className="m-2">
-                        <ItemContent>
-                            <ItemTitle>{dataset.date}</ItemTitle>
-                            <ItemDescription>
-                                Total <Badge>{(dataset.total).toFixed(2)}</Badge>
-                            </ItemDescription>
-                            <ItemDescription>
-                                Hours worked  <Badge>{(dataset.hoursWorked).toFixed(2)}</Badge>
-                            </ItemDescription>
-                            <ItemDescription>
-                                Average hour <Badge>{(dataset.total / dataset.hoursWorked).toFixed(2)}</Badge>
-                            </ItemDescription>
-                        </ItemContent>
-                    </Item>
+                    <div key={dataset.date} className='hover:bg-gray-100'>
+                        <Link to={`/jobs/${jobId}/shifts?month=${dataset.date}`}>
+                            <Item variant="outline">
+                                <ItemContent>
+                                    <ItemTitle>
+                                        {new Date(dataset.date + "-01").toLocaleString("en-US", {
+                                            month: "long",
+                                            year: "numeric",
+                                        })}
+                                    </ItemTitle>
+                                    <ItemDescription>
+                                        Total <Badge>{(dataset.total).toFixed(2)}</Badge>
+                                    </ItemDescription>
+                                    <ItemDescription>
+                                        Hours worked  <Badge>{(dataset.hoursWorked).toFixed(2)}</Badge>
+                                    </ItemDescription>
+                                    <ItemDescription>
+                                        Average hour <Badge>{(dataset.total / dataset.hoursWorked).toFixed(2)}</Badge>
+                                    </ItemDescription>
+                                </ItemContent>
+                            </Item>
+                        </Link>
+                    </div>
                 )
             }) : 'there are not any shifts to this job'}
         </div>

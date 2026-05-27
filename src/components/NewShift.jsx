@@ -38,10 +38,10 @@ export default function NewShift({ jobId, jobHourlyRate }) {
 
     const formattedDate = `${year}-${month}-${day}`;
 
-    const { data, error } = await supabase
+    const { error } = await supabase
     .from('shift')
     .insert(
-      { hoursWorked: hoursWorked, tips: tips, total: parseInt(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: formattedDate, jobFK: jobId },
+      { hoursWorked: hoursWorked, tips: tips, total: parseFloat(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: formattedDate, jobFK: jobId },
     )
     if (error) console.log(error)
     else window.location.reload();
@@ -58,11 +58,11 @@ export default function NewShift({ jobId, jobHourlyRate }) {
             <FieldGroup>
               <Field>
                 <FieldLabel>Tips</FieldLabel>
-                <Input type="number" onChange={(e) => setTips(e.target.value)}  autoComplete="off" placeholder="Tips" />
+                <Input type="number" onChange={(e) => setTips(e.target.value)} autoComplete="off" placeholder="Tips" />
               </Field>
               <Field>
                 <FieldLabel>Hours worked</FieldLabel>
-                <Input type="number" onChange={(e) => setHoursWorked(e.target.value)}  autoComplete="off" placeholder="Hours worked" />
+                <Input type="number" onChange={(e) => setHoursWorked(e.target.value)} autoComplete="off" placeholder="Hours worked" />
               </Field>
               <Field>
                 <FieldLabel>Date</FieldLabel>
@@ -101,12 +101,3 @@ export default function NewShift({ jobId, jobHourlyRate }) {
     </Dialog>
     );
 };
-
-/*
-
-              <Field>
-                <FieldLabel>Date</FieldLabel>
-                <Input type="text" onChange={(e) => setDate(e.target.value)}  autoComplete="off" placeholder="year-month-date" />
-              </Field>
-
-              */

@@ -22,7 +22,7 @@ export default function Login() {
         })
         if (error) alert(error)
         else window.location.replace('/');
-    }
+    };
 
     return (
         <div className="container mx-auto p-8 my-4 border max-w-lg">
@@ -46,5 +46,5 @@ export default function Login() {
                 </FieldGroup>
             </FieldSet>
         </div>
-    )
-}
+    );
+};
