@@ -25,24 +25,22 @@ export default function Login() {
     };
 
     return (
-        <div className="container mx-auto p-8 my-4 border max-w-lg">
+        <div className="container mx-auto border max-w-lg bg-white p-8 mt-10">
             <FieldSet>
                 <FieldLegend>Login</FieldLegend>
                 <FieldGroup>
                     <Field>
                       <FieldLabel>Email</FieldLabel>
-                      <Input type="email" onChange={(e) => setEmail(e.target.value)}  autoComplete="off" placeholder="Email" />
+                      <Input type="email" className="focus-visible:ring-indigo-200 focus-visible:border-indigo-400" onChange={(e) => setEmail(e.target.value)}  autoComplete="off" placeholder="Email" />
                    </Field>
                     <Field>
                       <FieldLabel>Password</FieldLabel>
-                        <Input type="password" onChange={(e) => setPassword(e.target.value)}  autoComplete="off" placeholder="Password" />
-                    </Field>
-                    <Field orientation="horizontal">
-                        <Button type="submit" onClick={Login}>Login</Button>
+                        <Input type="password" className="focus-visible:ring-indigo-200 focus-visible:border-indigo-400" onChange={(e) => setPassword(e.target.value)}  autoComplete="off" placeholder="Password" />
                     </Field>
                     <Field>
-                        <FieldLabel>No account?<Link to={"/signup"}><Button variant="link">Create an account</Button></Link></FieldLabel>
+                        <Button type="submit" className="bg-indigo-500 hover:bg-indigo-600" onClick={Login}>Login</Button>
                     </Field>
+                    <p className="text-sm"><Link className="hover:underline hover:underline-offset-2" to={"/signup"}>No account? Create an account</Link></p>
                 </FieldGroup>
             </FieldSet>
         </div>

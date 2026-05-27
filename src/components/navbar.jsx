@@ -13,12 +13,12 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="border-b py-4 px-2 md:px-0">
+        <nav className="border-b py-4 px-2 md:px-0 bg-indigo-500">
             <div className="container mx-auto">
                 <div className="flex justify-between">
-                    <div><Button variant="outline" onClick={dashboardRedirect}>Dashboard</Button></div>
+                    <div><Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer" onClick={dashboardRedirect}>Dashboard</Button></div>
 
-                    <div><Button variant="outline" onClick={logout}>Logout</Button></div>
+                    <div><Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer" onClick={logout}>Logout</Button></div>
                 </div>
             </div>
         </nav>

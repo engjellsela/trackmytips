@@ -61,31 +61,31 @@ export default function ViewJobShiftsByMonth() {
 
     return (
         <div>
-            <nav className="border-b py-4 px-2 md:px-0">
+            <nav className="bg-indigo-500 py-4 px-2 md:px-0">
                 <div className="container mx-auto">
-                    <Link to={`/jobs/${jobId}`}><Button variant="outline">Back</Button></Link>
+                    <Link to={`/jobs/${jobId}`}><Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer">Back</Button></Link>
                 </div>
             </nav>
 
             <div className="container mx-auto mt-5">
-                <p className="text-lg font-semibold">
+                <p className="text-lg font-medium">
                     Shifts data for {new Date(month + "-01").toLocaleString("en-US", { month: "long", year: "numeric"})}
                 </p>
             </div>
 
-            <div className="container mx-auto my-5 border">
+            <div className="container mx-auto my-5 border bg-white">
                 <Table>
                     <TableHeader>
-                        <TableRow>
-                        <TableHead className="w-[100px] border-r">Date</TableHead>
-                        <TableHead className="border-r">Tips</TableHead>
-                        <TableHead className="border-r">Hours worked</TableHead>
-                        <TableHead>Total</TableHead>
+                        <TableRow className="hover:bg-indigo-50">
+                            <TableHead className="w-[100px] border-r">Date</TableHead>
+                            <TableHead className="border-r">Tips</TableHead>
+                            <TableHead className="border-r">Hours worked</TableHead>
+                            <TableHead>Total</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {shifts.sort((a, b) => new Date(a.date) - new Date(b.date)).map((shift) => (
-                        <TableRow key={shift.id}>
+                        <TableRow key={shift.id} className="hover:bg-indigo-50">
                             <TableCell className="border-r">{shift.date}</TableCell>
                             <TableCell className="border-r">{shift.tips}</TableCell>
                             <TableCell className="border-r">{shift.hoursWorked}</TableCell>
@@ -94,7 +94,7 @@ export default function ViewJobShiftsByMonth() {
                         ))}
                     </TableBody>
                     <TableFooter>
-                        <TableRow>
+                        <TableRow className="hover:bg-indigo-50">
                             <TableCell className="w-[100px] border-r">Total</TableCell>
                             <TableCell className="border-r">{totalTips}</TableCell>
                             <TableCell className="border-r">{totalHours}</TableCell>
@@ -106,7 +106,7 @@ export default function ViewJobShiftsByMonth() {
             </div>
 
             <div className="container mx-auto">
-                <p className="text-sm">Total hourly rate: ${total / totalHours}</p>
+                <p className="text-sm">Total hourly rate: <span className="font-semibold">${total / totalHours}</span></p>
             </div>
         </div>
     )

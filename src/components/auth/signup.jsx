@@ -22,46 +22,33 @@ export default function SignUp() {
             password: password,
         })
         if (error) alert(error)
-        else {
-            
+        else {            
             const { error } = await supabase
             .from('userAccounts')
             .insert({ userID: data.user.id, email: data.user.email })
             if (error) console.log(error)
-            
         }
-    }
-
-    const test = async () => {
-        const { data, error } = await supabase
-        .from('job')
-        .insert({ id: '262fe25b-2e08-438e-b247-79986ca584b1', name: 'test', hourlyRate: 10, userFK: '262fe25b-2e08-438e-b247-79986ca584b1' })
-        if (error) console.log(error)
-        else console.log(data)
-    }
+    };
 
     return (
-        <div className="container mx-auto p-8 my-4 border">
+        <div className="container mx-auto bg-white border max-w-lg p-8 mt-10">
             <FieldSet>
-                <FieldLegend>Sign up</FieldLegend>
+                <FieldLegend>Create an account</FieldLegend>
                     <FieldGroup>
                         <Field>
                           <FieldLabel>Email</FieldLabel>
-                          <Input type="email" onChange={(e) => setEmail(e.target.value)}  autoComplete="off" placeholder="Email" />
+                          <Input type="email" className='focus-visible:ring-indigo-200 focus-visible:border-indigo-400' onChange={(e) => setEmail(e.target.value)}  autoComplete="off" placeholder="Email" />
                        </Field>
                         <Field>
                           <FieldLabel>Password</FieldLabel>
-                          <Input type="password" onChange={(e) => setPassword(e.target.value)}  autoComplete="off" placeholder="Password" />
-                        </Field>
-                        <Field orientation="horizontal">
-                            <Button type="submit" onClick={SignUp}>Login</Button>
-                            <Button type="submit" onClick={test}>Test acc</Button>
+                          <Input type="password" className='focus-visible:ring-indigo-200 focus-visible:border-indigo-400' onChange={(e) => setPassword(e.target.value)}  autoComplete="off" placeholder="Password" />
                         </Field>
                         <Field>
-                            <FieldLabel>Already have an account?<Link to={"/login"}><Button variant="link">Login</Button></Link></FieldLabel>
+                            <Button type="submit" className='bg-indigo-500 hover:bg-indigo-600' onClick={SignUp}>Sign up</Button>
                         </Field>
+                        <p className="text-sm hover:underline hover:underline-offset-2"><Link to={"/login"}>Already have an account? Login</Link></p>
                     </FieldGroup>
             </FieldSet>
         </div>
     )
-}
+};

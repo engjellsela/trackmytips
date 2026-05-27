@@ -52,7 +52,7 @@ export default function ViewJob() {
             <Navbar />
             <div className="container mx-auto my-10 px-2 md:p-0">
                 <div className="flex justify-between mb-5">
-                    <div><p>{jobName}</p></div>
+                    <div><p className="text-lg font-medium mt-1">{jobName}</p></div>
                     <div><NewShift jobId={jobId} jobHourlyRate={jobHourlyRate} /></div>
                 </div>
 

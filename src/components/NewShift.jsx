@@ -49,7 +49,7 @@ export default function NewShift({ jobId, jobHourlyRate }) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild><Button>+ New shift</Button></DialogTrigger>
+      <DialogTrigger asChild><Button className="bg-indigo-500 hover:bg-indigo-600">+ New shift</Button></DialogTrigger>
       <DialogContent>
           <DialogHeader>
               <DialogTitle>Create new shift</DialogTitle>
