@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { da } from "date-fns/locale/da";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -28,15 +29,19 @@ export default function ViewJobShiftsByMonth() {
     const month = query.get("month");
 
     useEffect(() => {
+        const date = new Date(`"${month}-01"`);
+        const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        const end = endDate.toISOString().split("T")[0];
+
         const getShifts = async () => {
             const {data, error} = await supabase
             .from('shift')
             .select('*')
             .eq('jobFK', jobId)
             .gte("date", `${month}-01`)
-            .lte("date", `${month}-31`);
+            .lte("date", `${end}`);
             if (error) console.log(error)
-            setShifts(data);
+            else setShifts(data);
         };
 
         getShifts();
@@ -78,35 +83,33 @@ export default function ViewJobShiftsByMonth() {
                     <TableHeader>
                         <TableRow className="hover:bg-indigo-50">
                             <TableHead className="w-[100px] border-r">Date</TableHead>
+                            <TableHead className="border-r">Hours</TableHead>
                             <TableHead className="border-r">Tips</TableHead>
-                            <TableHead className="border-r">Hours worked</TableHead>
-                            <TableHead>Total</TableHead>
+                            <TableHead className="border-r">Total</TableHead>
+                            <TableHead>Hourly Rate</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {shifts.sort((a, b) => new Date(a.date) - new Date(b.date)).map((shift) => (
                         <TableRow key={shift.id} className="hover:bg-indigo-50">
                             <TableCell className="border-r">{shift.date}</TableCell>
-                            <TableCell className="border-r">{shift.tips}</TableCell>
-                            <TableCell className="border-r">{shift.hoursWorked}</TableCell>
-                            <TableCell>{shift.total}</TableCell>
+                            <TableCell className="border-r">{shift.hoursWorked}h</TableCell>
+                            <TableCell className="border-r">${shift.tips.toFixed(2)}</TableCell>
+                            <TableCell className="border-r">${shift.total}</TableCell>
+                            <TableCell>{(shift.total / shift.hoursWorked).toFixed(2)}</TableCell>
                         </TableRow>
                         ))}
                     </TableBody>
                     <TableFooter>
                         <TableRow className="hover:bg-indigo-50">
                             <TableCell className="w-[100px] border-r">Total</TableCell>
-                            <TableCell className="border-r">{totalTips}</TableCell>
-                            <TableCell className="border-r">{totalHours}</TableCell>
-                            <TableCell>{total}</TableCell>
+                            <TableCell className="border-r">{totalHours}h</TableCell>
+                            <TableCell className="border-r">${totalTips.toFixed(2)}</TableCell>
+                            <TableCell className="border-r">${total.toFixed(2)}</TableCell>
+                            <TableCell>{(total / totalHours).toFixed(2)}h</TableCell>
                         </TableRow>
                     </TableFooter>
                 </Table>
-
-            </div>
-
-            <div className="container mx-auto">
-                <p className="text-sm">Total hourly rate: <span className="font-semibold">${total / totalHours}</span></p>
             </div>
         </div>
     )

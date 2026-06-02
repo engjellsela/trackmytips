@@ -43,7 +43,7 @@ export default function CalculateByMonth({ jobId, shiftData }) {
                             <Item className="px-0">
                                 <ItemContent>
                                     <ItemTitle className="border-b w-full pl-2 pb-2">
-                                        {new Date(dataset.date + "-01").toLocaleString("en-US", {
+                                        {new Date(`"${dataset.date}-01"`).toLocaleString("en-US", {
                                             month: "long",
                                             year: "numeric",
                                         })}
