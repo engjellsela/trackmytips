@@ -41,7 +41,7 @@ export default function NewShift({ jobId, jobHourlyRate }) {
     const { error } = await supabase
     .from('shift')
     .insert(
-      { hoursWorked: hoursWorked, tips: tips, total: parseFloat(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: formattedDate, jobFK: jobId },
+      { hoursWorked: hoursWorked, tips: tips, total: parseFloat(tips) + (parseInt(hoursWorked) * jobHourlyRate), date: formattedDate, jobFK: jobId, hourlyRateAtTime: jobHourlyRate },
     )
     if (error) console.log(error)
     else window.location.reload();

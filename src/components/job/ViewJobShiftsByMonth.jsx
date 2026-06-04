@@ -12,7 +12,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { da } from "date-fns/locale/da";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose
+} from "@/components/ui/dialog";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldSet
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -24,6 +40,10 @@ export default function ViewJobShiftsByMonth() {
     const [totalTips, setTotalTips] = useState(0);
     const [totalHours, setTotalHours] = useState(0);
     const [total, setTotal] = useState(0);
+    const [editTips, setEditTips] = useState(0);
+    const [editHours, setEditHours] = useState(0);
+    const [openEditDialog, setOpenEditDialog] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     const query = useQuery();
     const month = query.get("month");
@@ -64,6 +84,44 @@ export default function ViewJobShiftsByMonth() {
         setTotal(totalSum);
     }, [shifts]);
 
+    const editShift = async (id, hourlyRate) => {
+        const shift = shifts.find((s) => s.id === id);
+
+        const newTips = editTips != 0 ? editTips : shift.tips;
+        const newHours = editHours != 0 ? editHours : shift.hoursWorked;
+
+        const { data, error } = await supabase
+        .from('shift')
+        .update({ tips: Number(newTips), hoursWorked: Number(newHours), total: Number(newTips) + Number(newHours) * hourlyRate })
+        .eq('id', id)
+        if (error) alert(error)
+        else { 
+            setShifts((prev) =>
+                prev.map((s) =>
+                s.id === id 
+                ? { 
+                    ...s, 
+                    tips: Number(newTips),
+                    hoursWorked: Number(newHours),
+                    total: Number(newTips) + Number(newHours) * hourlyRate
+                 } : s
+                )
+            );
+            setEditTips(0);
+            setEditHours(0);
+            setOpenEditDialog(false);
+        }
+    };
+
+    const deleteShift = async (id) => {
+        const { error } = await supabase
+        .from('shift')
+        .delete()
+        .eq('id', id)
+        if (error) console.log(error)
+        else setShifts((prev) => prev.filter((s) => s.id !== id));
+    };
+
     return (
         <div>
             <nav className="bg-indigo-500 py-4 px-2 md:px-0">
@@ -86,7 +144,8 @@ export default function ViewJobShiftsByMonth() {
                             <TableHead className="border-r">Hours</TableHead>
                             <TableHead className="border-r">Tips</TableHead>
                             <TableHead className="border-r">Total</TableHead>
-                            <TableHead>Hourly Rate</TableHead>
+                            <TableHead className="border-r">Hourly Rate</TableHead>
+                            <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -96,7 +155,50 @@ export default function ViewJobShiftsByMonth() {
                             <TableCell className="border-r">{shift.hoursWorked}h</TableCell>
                             <TableCell className="border-r">${shift.tips.toFixed(2)}</TableCell>
                             <TableCell className="border-r">${shift.total}</TableCell>
-                            <TableCell>{(shift.total / shift.hoursWorked).toFixed(2)}</TableCell>
+                            <TableCell className="border-r">{shift.hourlyRateAtTime.toFixed(2)}h</TableCell>
+                            <TableCell>
+                                <Dialog open={openEditDialog} onOpenChange={setOpenEditDialog}>
+                                    <DialogTrigger asChild>
+                                        <Button size="sm" className="bg-green-600 hover:bg-green-700 mr-2">Edit</Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-sm" aria-describedby={undefined}>
+                                        <DialogHeader>
+                                            <DialogTitle>Edit shift</DialogTitle>
+                                        </DialogHeader>
+                                        <FieldGroup>
+                                            <Field>
+                                                <Label htmlFor="username-1">Tips</Label>
+                                                <Input id="tipsInput" name="tips" defaultValue={shift.tips} onChange={(e) => setEditTips(e.target.value)} />
+                                            </Field>
+                                            <Field>
+                                                <Label htmlFor="name-1">Hours</Label>
+                                                <Input id="hrsWorkedInput" name="hoursWorked" defaultValue={shift.hoursWorked} onChange={(e) => setEditHours(e.target.value)} />
+                                            </Field>
+                                        </FieldGroup>
+                                        <DialogFooter>
+                                            <DialogClose asChild>
+                                                <Button variant="outline">Cancel</Button>
+                                            </DialogClose>
+                                            <Button onClick={() => editShift(shift.id, shift.hourlyRateAtTime)} type="submit">Save changes</Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                                <Dialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
+                                    <DialogTrigger asChild>
+                                        <Button size="sm" className="bg-red-600 hover:bg-red-700">Delete</Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-sm" aria-describedby={undefined}>
+                                        <DialogHeader>
+                                            <DialogTitle>Are you sure you want to delete?</DialogTitle>
+                                            <FieldGroup>
+                                                <Field>
+                                                    <Button onClick={() => deleteShift(shift.id)} className="bg-red-600 hover:bg-red-700">Delete</Button>
+                                                </Field>
+                                            </FieldGroup>
+                                        </DialogHeader>
+                                    </DialogContent>
+                                </Dialog>
+                            </TableCell>
                         </TableRow>
                         ))}
                     </TableBody>
@@ -106,10 +208,12 @@ export default function ViewJobShiftsByMonth() {
                             <TableCell className="border-r">{totalHours}h</TableCell>
                             <TableCell className="border-r">${totalTips.toFixed(2)}</TableCell>
                             <TableCell className="border-r">${total.toFixed(2)}</TableCell>
-                            <TableCell>{(total / totalHours).toFixed(2)}h</TableCell>
+                            <TableCell className="border-r">{(total / totalHours).toFixed(2)}h</TableCell>
+                            <TableCell />
                         </TableRow>
                     </TableFooter>
                 </Table>
+
             </div>
         </div>
     )
