@@ -29,6 +29,27 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Title
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  Title
+);
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -122,6 +143,47 @@ export default function ViewJobShiftsByMonth() {
         else setShifts((prev) => prev.filter((s) => s.id !== id));
     };
 
+    const chartData = {
+        labels: shifts.map(s => new Date(s.date).getDay() + 1),
+        datasets: [
+            {
+                label: "Earnings",
+                data: shifts.map(s => s.total),
+                borderColor: "#4f46e5",
+                backgroundColor: "rgba(79,70,229,0.1)",
+                tension: 0.3,
+            },
+        ],
+    };
+
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: "Total shift income by day"
+            },
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Day of Month"
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: "Total ($)"
+                },
+                beginAtZero: true,
+            },
+        },
+    };
+
     return (
         <div>
             <nav className="bg-indigo-500 py-4 px-2 md:px-0">
@@ -134,6 +196,10 @@ export default function ViewJobShiftsByMonth() {
                 <p className="text-lg font-medium">
                     Shifts data for {new Date(month + "-01").toLocaleString("en-US", { month: "long", year: "numeric"})}
                 </p>
+            </div>
+
+            <div className="container mx-auto my-5 border bg-white p-5">
+                <Line data={chartData} options={chartOptions} />
             </div>
 
             <div className="container mx-auto my-5 border bg-white">
@@ -155,7 +221,7 @@ export default function ViewJobShiftsByMonth() {
                             <TableCell className="border-r">{shift.hoursWorked}h</TableCell>
                             <TableCell className="border-r">${shift.tips.toFixed(2)}</TableCell>
                             <TableCell className="border-r">${shift.total}</TableCell>
-                            <TableCell className="border-r">{shift.hourlyRateAtTime.toFixed(2)}h</TableCell>
+                            <TableCell className="border-r">{(shift.total / shift.hoursWorked).toFixed(2)}h</TableCell>
                             <TableCell>
                                 <Dialog open={openEditDialog} onOpenChange={setOpenEditDialog}>
                                     <DialogTrigger asChild>

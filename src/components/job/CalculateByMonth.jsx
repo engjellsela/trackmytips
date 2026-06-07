@@ -27,7 +27,7 @@ export default function CalculateByMonth({ jobId, shiftData }) {
                     return acc;
                 }, {})
             );            
-            
+               
             setData(groupByMonth);
         };
 
@@ -36,6 +36,7 @@ export default function CalculateByMonth({ jobId, shiftData }) {
 
     return (
         <div className="flex flex-col">
+            {console.log('data: ', data)}
             {data.length > 0 ? data.map(dataset => {
                 return (
                     <div key={dataset.date} className='bg-white rounded-sm hover:border-indigo-400 hover:bg-indigo-50 border w-full mb-5'>
