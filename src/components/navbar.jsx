@@ -1,5 +1,6 @@
 import { supabase } from "../supabaseClient";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom"
 
 export default function Navbar() {
     const logout = async () => {
@@ -18,7 +19,10 @@ export default function Navbar() {
                 <div className="flex justify-between">
                     <div><Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer" onClick={dashboardRedirect}>Dashboard</Button></div>
 
-                    <div><Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer" onClick={logout}>Logout</Button></div>
+                    <div>
+                        <Link to={'/comparejobs'}><Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer">Compare Jobs</Button></Link>
+                        <Button variant="link" className="text-white font-semibold hover:no-underline hover:bg-indigo-600 hover:cursor-pointer" onClick={logout}>Logout</Button>
+                    </div>
                 </div>
             </div>
         </nav>

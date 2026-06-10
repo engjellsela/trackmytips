@@ -3,7 +3,7 @@ import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom"
 import Navbar from "./navbar";
 import { useAuth } from "../context/AuthContext";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function GetJobs() {
     const { userId } = useAuth();

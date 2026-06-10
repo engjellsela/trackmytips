@@ -65,6 +65,8 @@ export default function ViewJobShiftsByMonth() {
     const [editHours, setEditHours] = useState(0);
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [bestShift, setBestShift] = useState();
+    const [worstShift, setWorstShift] = useState();
 
     const query = useQuery();
     const month = query.get("month");
@@ -103,6 +105,20 @@ export default function ViewJobShiftsByMonth() {
         setTotalTips(tipsSum);
         setTotalHours(hoursWorkedSum);
         setTotal(totalSum);
+
+        if (shifts.length != 0) {
+            const shiftsWithRate = shifts.map(shift => ({
+                ...shift,
+                hourlyRate: shift.total / shift.hoursWorked,
+            }));
+
+            const best = shiftsWithRate.reduce((max, shift) => shift.hourlyRate > max.hourlyRate ? shift : max);
+
+            const worst = shiftsWithRate.reduce((min, shift) => shift.hourlyRate < min.hourlyRate ? shift : min);
+
+            setBestShift(best);
+            setWorstShift(worst);
+        };
     }, [shifts]);
 
     const editShift = async (id, hourlyRate) => {
@@ -196,6 +212,11 @@ export default function ViewJobShiftsByMonth() {
                 <p className="text-lg font-medium">
                     Shifts data for {new Date(month + "-01").toLocaleString("en-US", { month: "long", year: "numeric"})}
                 </p>
+            </div>
+
+            <div className="container mx-auto mt-5">
+                <p>{bestShift ? `Best shift: ${bestShift.date} - $${bestShift.hourlyRate.toFixed(2)}h` : ''}</p>
+                <p>{worstShift ? `Worst shift: ${worstShift.date} - $${worstShift.hourlyRate.toFixed(2)}h` : ''}</p>
             </div>
 
             <div className="container mx-auto my-5 border bg-white p-5">

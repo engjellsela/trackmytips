@@ -4,9 +4,11 @@ import ViewJob from "./components/job/ViewJob";
 import ViewJobShiftsByMonth from './components/job/ViewJobShiftsByMonth';
 import NewJob from "./components/NewJob";
 import Login from "./components/auth/login";
+import CompareJobs from './components/CompareJobs';
 import SignUp from "./components/auth/signup";
 import ErrorPage from "./components/ErrorPage";
 import { useAuth } from "./context/AuthContext";
+
 
 export default function App() {
   const { userAuth, authLoaded } = useAuth();
@@ -30,6 +32,7 @@ export default function App() {
             <Route path="/jobs/:jobId" element={<ViewJob />} />
             <Route path="/jobs/:jobId/shifts" element={<ViewJobShiftsByMonth />} />
             <Route path="/newjob" element={<NewJob />} />
+            <Route path="/comparejobs" element={<CompareJobs />} />
             <Route path="*" element={<ErrorPage />} />
           </>
         )}
