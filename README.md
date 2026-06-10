@@ -1,5 +1,7 @@
 # Tip tracker app
 
+Live demo: https://trackmytips.netlify.app/login
+
 A React web-app for tracking earnings in a single or multiple jobs. This app helps you to analyze monthly income, total hours worked, average hour, compare jobs and store data for long periods of time.
 
 ## Features
@@ -16,5 +18,28 @@ A React web-app for tracking earnings in a single or multiple jobs. This app hel
 - Supabase
 - Tailwind
 
-## Live demo
-https://trackmytips.netlify.app/login
+## Database Schema
+### userAccounts table
+- userID: UUID
+- email: text
+- created_at: timestamptz
+
+---
+
+### job table
+- id: UUID
+- name: text
+- hourlyRate: numeric
+- userFK: uuid ( foreign key -> userAccounts.userID )
+- created_at: timestamptz
+
+----
+
+### shift table
+- id: UUID
+- hoursWorked: numeric
+- tips: numeric
+- total: numeric
+- date: date
+- jobFK: uuid ( foreingn key -> job.id)
+- created_at: timestamptz

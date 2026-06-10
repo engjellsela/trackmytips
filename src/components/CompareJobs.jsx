@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 export default function CompareJobs() {
     const [jobs, setJobs] = useState([]);
@@ -54,17 +53,9 @@ export default function CompareJobs() {
     }, [shifts]);
 
     useEffect(() => {
-        const first = {
-            total: 0,
-            hoursWorked: 0,
-            hourlyAvg: 0
-        };
+        const first = { total: 0, hoursWorked: 0, hourlyAvg: 0 };
 
-        const second = {
-            total: 0,
-            hoursWorked: 0,
-            hourlyAvg: 0
-        };
+        const second = { total: 0, hoursWorked: 0, hourlyAvg: 0 };
 
         filteredShifts.forEach(shift => {
             if (shift.jobFK === firstJob) {
@@ -76,16 +67,12 @@ export default function CompareJobs() {
             }
         });
 
-        first.hourlyAvg =
-            first.hoursWorked > 0
-                ? first.total / first.hoursWorked
-                : 0;
+        first.hourlyAvg = first.hoursWorked > 0 ? first.total / first.hoursWorked : 0;
 
-        second.hourlyAvg =
-            second.hoursWorked > 0
-                ? second.total / second.hoursWorked
-                : 0;
+        second.hourlyAvg = second.hoursWorked > 0 ? second.total / second.hoursWorked : 0;
 
+        if (firstJob && secondJob && selectedMonth) setShowComparison(true);
+        
         setFirstJobSummary(first);
         setSecondJobSummary(second);
     }, [shifts, selectedMonth, firstJob, secondJob]);
@@ -143,8 +130,6 @@ export default function CompareJobs() {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-
-                <Button disabled={!firstJob || !secondJob || !selectedMonth} onClick={() => setShowComparison(true)} className="w-full">Compare</Button>
             </div>
         
             {showComparison && (

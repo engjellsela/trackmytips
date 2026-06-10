@@ -25,15 +25,15 @@ export default function GetJobs() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto my-10 px-2 md:p-0">
+            <div className="container mx-auto my-7 px-2 md:p-0">
                 <div className="flex justify-between mb-5">
-                    <div><p className="text-lg font-medium mt-1">All jobs</p></div>
-                    <div><Link to="/newjob"><Button className="bg-indigo-500 hover:bg-indigo-600">+ New Job</Button></Link></div>
+                    <div><p className="text-xl font-medium mt-1">All jobs</p></div>
+                    <div><Link to="/newjob"><Button size="lg" className="bg-indigo-500 hover:bg-indigo-600">+ New Job</Button></Link></div>
                 </div>
 
                 <div className="flex flex-col">
                     {jobs.map((job) => (
-                        <Link to={`/jobs/${job.id}`} key={job.id} className="bg-white border w-full rounded-sm p-5 my-5 hover:bg-indigo-50 hover:border-indigo-400">
+                        <Link to={`/jobs/${job.id}`} key={job.id} className="bg-white border w-full rounded-sm p-5 my-2 hover:bg-indigo-50 hover:border-indigo-400">
                             <div>
                                 {job.name}
                             </div>
