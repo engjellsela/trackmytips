@@ -45,10 +45,6 @@ A React web-app for tracking earnings in a single or multiple jobs. This app hel
 - created_at: timestamptz
 
 ## Preview
-### Jobs Page
-![Jobs Page](./images/getJobsPage.png)
-### View Jobs Page
-![View Jobs Page](./images/viewJobPage.png)
 ## View Shifts Page
 ![View Shift Page](./images/viewShiftPage.png)
 ## Compare Jobs Page
